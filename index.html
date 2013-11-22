@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Swipejs demo</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    .wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .swipe {
+      overflow: hidden;
+      visibility: hidden;
+      position: relative;
+    }
+    .swipe-wrap {
+      overflow: hidden;
+      position: relative;
+    }
+    .swipe-wrap > img {
+      float:left;
+      width:100%;
+      position: relative;
+    }
+
+    #position {
+      position: absolute;
+      z-index: 100;
+      padding: 0;
+      width: 100%;
+      text-align: center;
+    }
+    #position li {
+      list-style: none;
+      width: 10px;
+      height: 10px;
+      background-color: #000;
+      display: inline-block;
+    }
+    #position li.on {
+      background-color: #f00;
+    }
+
+    #controls span {
+      position: absolute;
+      z-index: 2000;
+      top: 50%;
+      margin: -40px 0 0;
+      width: 0;
+      height: 0;
+      border-top: 40px solid transparent;
+      border-bottom: 40px solid transparent;
+      opacity: 0.7;
+      cursor: pointer;
+    }
+    #controls span:hover {
+      opacity: 1.0;
+    }
+    #controls .next {
+      right: 20px;
+      border-left: 40px solid #fff;
+    }
+    #controls .prev {;
+      left: 20px;
+      border-right: 40px solid #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <nav id="controls">
+      <span class="prev" onclick="changeSlide(-1);"></span>
+      <span class="next" onclick="changeSlide(1);"></span>
+    </nav>
+    <nav>
+      <ul id="position">
+        <li class="on"></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </nav>
+    <div id="slider" class="swipe">
+      <div class="swipe-wrap">
+        <img src="img/bugatti-veyron-1.jpg">
+        <img src="img/harley_0.jpg">
+        <img src="img/mona-lisa-1-1.jpg">
+        <img src="img/moto.jpg">
+        <img src="img/yacht-yacht.jpg">
+      </div>
+    </div>
+  </div>
+
+  <script src="http://bradbirdsall.github.com/Swipe/swipe.js"></script>
+  <script>
+    (function (w) {
+      var bullets = document.getElementById('position').getElementsByTagName('li');
+      var slider = Swipe(document.getElementById('slider'), {
+        auto: false,
+        continuous: true,
+        callback: function(pos) {
+          var i = bullets.length;
+          while (i--) {
+            bullets[i].className = ' ';
+          }
+          bullets[pos].className = 'on';
+        }
+      });
+      w.changeSlide = function(pos) {
+        if(pos > 0) {
+          slider.next();
+        }
+        else {
+          slider.prev();
+        }
+      }
+    })(window);
+  </script>
+
+</body>
+</html>
